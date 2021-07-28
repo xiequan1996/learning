@@ -1,5 +1,5 @@
 '''
-Descripttion: 
+Descripttion:用于测试网站的自动化测试工具，支持各种浏览器包括Chrome、Firefox、Safari等主流界面浏览器，同时也支持phantomJS无界面浏览器 
 version: 
 Author: xiequan
 Date: 2021-07-16 10:02:52

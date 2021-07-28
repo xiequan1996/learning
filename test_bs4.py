@@ -1,10 +1,10 @@
 '''
-Descripttion: 
+Descripttion: 解析,遍历,维护“标签树”代码的功能库
 version: 
 Author: xiequan
 Date: 2021-06-16 11:43:50
 LastEditors: Please set LastEditors
-LastEditTime: 2021-07-04 17:51:49
+LastEditTime: 2021-07-27 21:34:05
 '''
 from bs4 import BeautifulSoup   #导入BeautifulSoup库
 import re                       #导入正则模块
