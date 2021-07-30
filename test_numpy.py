@@ -4,7 +4,7 @@ version:
 Author: xiequan
 Date: 2021-07-30 17:24:23
 LastEditors: Please set LastEditors
-LastEditTime: 2021-07-30 20:06:30
+LastEditTime: 2021-07-30 20:36:31
 '''
 import numpy as np
 
@@ -26,9 +26,14 @@ print(student)
 # 数组属性
 e = np.array([[1, 2, 3], [4, 5, 6]])
 e.shape = (3, 2)
-f = np.arange(24)
-g = f.reshape(2, 4, 3)
+f = np.arange(24)  # 一维数组
+f1 = f.reshape(2, 4, 3)  # 高，宽，长
+g = np.array([1, 2, 3, 4, 5], dtype=np.int8)  # int8为一个字节
 print(e)
-print(g)
-print(g[1, 2, 1])
+print(f1[1, 2, 1])
+print(g.itemsize)  # 每个元素的字节单位长度
 
+# 数组创建
+h = np.empty([3, 2], dtype=int)  # 第一个参数是形状;第二个参数是数组类型,默认是float
+
+print(h)
