@@ -4,12 +4,9 @@ version:
 Author: xiequan
 Date: 2021-07-30 17:24:23
 LastEditors: Please set LastEditors
-LastEditTime: 2021-08-12 17:36:08
+LastEditTime: 2021-09-22 21:45:19
 '''
 import numpy as np
-from numpy.core.fromnumeric import transpose
-
-from numpy.core.records import array
 
 # 数据类型
 a = np.array([[1, 2], [3, 4]])
