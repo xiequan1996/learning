@@ -4,12 +4,12 @@ version:
 Author: xiequan
 Date: 2021-10-22 16:08:09
 LastEditors: Please set LastEditors
-LastEditTime: 2021-10-22 17:12:51
+LastEditTime: 2021-10-25 20:53:39
 '''
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.tensorboard import SummaryWriter
+from tensorboardX import SummaryWriter
 
 
 class Net1(nn.Module):
