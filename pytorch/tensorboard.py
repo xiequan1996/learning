@@ -4,7 +4,7 @@ version:
 Author: xiequan
 Date: 2021-10-22 16:08:09
 LastEditors: Please set LastEditors
-LastEditTime: 2021-10-25 20:53:39
+LastEditTime: 2021-10-29 13:20:51
 '''
 import torch
 import torch.nn as nn
@@ -38,5 +38,5 @@ class Net1(nn.Module):
 dummy_input = torch.rand(13, 1, 28, 28)
 
 model1 = Net1()
-with SummaryWriter(comment='Net1') as w:
+with SummaryWriter(log_dir='../runs', comment='Net1') as w:
     w.add_graph(model1, (dummy_input,))

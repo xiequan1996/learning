@@ -4,7 +4,7 @@ version:
 Author: xiequan
 Date: 2021-10-16 14:11:28
 LastEditors: Please set LastEditors
-LastEditTime: 2021-10-27 15:56:38
+LastEditTime: 2021-10-29 13:23:29
 '''
 import os
 import random
@@ -39,8 +39,8 @@ norm_std = [0.229, 0.224, 0.225]  # 通道标准差
 train_transform = transforms.Compose(
     [
         transforms.Resize((32, 32)),
-        transforms.RandomCrop(32, padding=4),  # 随机裁剪，上下左右填充，默认常量
-        transforms.ToTensor(),
+        transforms.RandomCrop(32, padding=4),  # 先填充后裁剪
+        transforms.ToTensor(),  # 转为张量，并归一化
         transforms.Normalize(norm_mean, norm_std),
     ]
 )
@@ -144,7 +144,9 @@ iter_count = 0
 
 # 构建SummaryWriter
 writer = SummaryWriter(
-    comment='test_your_comment', filename_suffix='test_your_filename_suffix'
+    log_dir='../runs',
+    comment='test_your_comment',
+    filename_suffix='test_your_filename_suffix',
 )
 
 # 迭代训练模型
