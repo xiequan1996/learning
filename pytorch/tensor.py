@@ -1,11 +1,3 @@
-'''
-Descripttion: 学习tensor这一基本数据类型
-version: 
-Author: xiequan
-Date: 2021-08-12 20:15:13
-LastEditors: Please set LastEditors
-LastEditTime: 2021-10-22 18:09:48
-'''
 import torch
 import numpy as np
 

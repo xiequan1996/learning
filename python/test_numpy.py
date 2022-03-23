@@ -1,11 +1,3 @@
-'''
-Descripttion: 一个由多维数组对象和用于处理数组的例程集合组成的库
-version: 
-Author: xiequan
-Date: 2021-07-30 17:24:23
-LastEditors: Please set LastEditors
-LastEditTime: 2021-09-22 21:45:19
-'''
 import numpy as np
 
 # 数据类型
@@ -16,7 +8,7 @@ dt = np.dtype([('age', np.int8)])
 d = np.array([(10,), (20,), (30,)], ndmin=2, dtype=dt)  # 结构体化数据类型
 student = np.dtype(
     [('name', 'S20'), ('marks', 'f4'), ('age', 'i1')]
-)  #  < 小端在最小地址；> 小端在最大地址
+)  # < 小端在最小地址；> 小端在最大地址
 print('~' * 5 + '数据类型' + '~' * 5)
 print(a)
 print(b)
@@ -28,7 +20,7 @@ print(student)
 e = np.array([[1, 2, 3], [4, 5, 6]])
 e.shape = (3, 2)
 f = np.arange(24)  # 一维数组
-f1 = f.reshape(2, 4, 3)  # 高，宽，长
+f1 = f.reshape((2, 4, 3))  # 高，宽，长
 g = np.array([1, 2, 3, 4, 5], dtype=np.int8)  # int8为一个字节
 print('~' * 5 + '数据属性' + '~' * 5)
 print(e)
@@ -85,7 +77,7 @@ print(k2[~np.isnan(k2)])  # 使用取补运算符~来过滤nan
 # 两个数组的后缘维度的轴长度相符，或其中的一方的长度为1，则认为它们是广播兼容的
 # 就是相同（或差一)维度，0和1可以在范围内任取
 arr2 = np.arange(90)
-arr2 = arr2.reshape(3, 5, 6)
+arr2 = arr2.reshape((3, 5, 6))
 arr3 = np.array([[0, 10, 100, 1000, 1000, 10000]])
 print('~' * 5 + '广播' + '~' * 5)
 print(arr2)
@@ -122,7 +114,7 @@ for x, y in np.nditer([arr5, arr4]):  # 广播迭代
 print(list_arr)
 
 # 数组的操作
-arr6 = np.arange(18).reshape(2, 3, 3)
+arr6 = np.arange(18).reshape((2, 3, 3))
 print('~' * 5 + '数组的操作' + '~' * 5)
 print(arr6.flatten())  # 返回一维数组，相当于拷贝
 print(arr6.ravel())  # 返回一维数组，相当于视图

@@ -1,19 +1,12 @@
-'''
-Descripttion: pytorch自动微分
-version: 
-Author: xiequan
-Date: 2021-08-13 08:39:44
-LastEditors: Please set LastEditors
-LastEditTime: 2021-08-23 10:12:29
-'''
 import torch
+from torch import mean
 
 x = torch.ones(2, 2, requires_grad=True)  # 设置 requires_grad=True 来跟踪tensor的计算
 print(x)
 y = x + 2
 print(y)
 z = y * y * 3
-out = z.mean()  # 求平均值
+out = mean(z)  # 求平均值
 print(z, out)
 out.backward()  # 第一次执行梯度求导，动态图机制，默认每次反向传播后都会释放计算图
 print(x.grad)

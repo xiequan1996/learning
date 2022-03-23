@@ -1,11 +1,6 @@
-'''
+"""
 Descripttion: 线性回归
-version: 
-Author: xiequan
-Date: 2021-08-15 00:26:52
-LastEditors: Please set LastEditors
-LastEditTime: 2021-08-18 17:51:09
-'''
+"""
 import torch
 import matplotlib.pyplot as plt
 
@@ -20,8 +15,8 @@ x = torch.rand(20, 1) * 10  # x data (tensor), shape=(20, 1)
 y = 2 * x + (5 + torch.randn(20, 1))  # y data (tensor), shape=(20, 1)
 
 # 构建线性回归参数
-w = torch.randn((1), requires_grad=True)  # 设置梯度求解为 true
-b = torch.zeros((1), requires_grad=True)  # 设置梯度求解为 true
+w = torch.randn(1, requires_grad=True)  # 设置梯度求解为 true
+b = torch.zeros(1, requires_grad=True)  # 设置梯度求解为 true
 
 # 迭代训练 1000 次
 for iteration in range(1000):

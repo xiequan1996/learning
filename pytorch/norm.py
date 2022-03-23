@@ -1,11 +1,3 @@
-'''
-Descripttion: 范数函数
-version: 
-Author: xiequan
-Date: 2021-08-13 19:24:16
-LastEditors: Please set LastEditors
-LastEditTime: 2021-08-17 17:36:56
-'''
 import torch
 
 # torch.norm(input, p='fro', dim=None, keepdim=False, out=None, dtype=None)
@@ -44,4 +36,3 @@ print(torch.norm(c, p=1, dim=1))
 # F-范数 矩阵元素绝对值的平方和再开平方
 
 # 矩阵范数默认计算F范数
-

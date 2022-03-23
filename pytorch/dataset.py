@@ -1,11 +1,6 @@
-'''
+"""
 Descripttion: RMB二分
-version: 
-Author: xiequan
-Date: 2021-10-16 14:11:28
-LastEditors: Please set LastEditors
-LastEditTime: 2021-10-29 13:23:29
-'''
+"""
 import os
 import random
 import numpy as np
@@ -14,6 +9,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision.transforms as transforms
 from PIL import Image
+from torch import squeeze
 from torch.utils.data import Dataset, DataLoader
 from matplotlib import pyplot as plt
 from moduel.lenet import LeNet
@@ -31,8 +27,8 @@ set_seed()  # 设置随机种子
 
 # 参数设置
 rmb_label = {"1": 0, "100": 1}
-train_dir = '../dataset/rmb_split/train'
-valid_dir = '../dataset/rmb_split/valid'
+train_dir = r'E:\Dataset\rmb_split\train'
+valid_dir = r'E:\Dataset\rmb_split\valid'
 norm_mean = [0.485, 0.456, 0.406]  # 通道均值
 norm_std = [0.229, 0.224, 0.225]  # 通道标准差
 # 设置训练集的数据增强和转化
@@ -60,6 +56,7 @@ LR = 0.01
 log_interval = 10
 val_interval = 1
 
+
 # 继承Dataset,重写__getitem()__方法和__len__()方法
 class RMBDataset(Dataset):
     def __init__(self, data_dir, transform=None):
@@ -73,7 +70,8 @@ class RMBDataset(Dataset):
         self.transform = transform
 
     # 将data_dir里的所有img的地址和标签以元组形式保存到data_info
-    def get_img_info(self, data_dir):
+    @staticmethod
+    def get_img_info(data_dir):
         data_info = list()
         # data_dir 是训练集、验证集或者测试集的路径
         for root, dirs, _ in os.walk(data_dir):  # 遍历文件夹名
@@ -88,8 +86,8 @@ class RMBDataset(Dataset):
                 # filter()函数 过滤序列，返回新的列表
                 img_names = list(filter(lambda x: x.endswith('.jpg'), img_names))
                 # 遍历图片
-                for i in range(len(img_names)):
-                    img_name = img_names[i]
+                for img_i in range(len(img_names)):
+                    img_name = img_names[img_i]
                     # 图片的绝对路径
                     path_img = os.path.join(root, sub_dir, img_name)
                     # 标签，这里需要映射为 0、1 两个类别
@@ -175,7 +173,7 @@ for epoch in range(MAX_EPOCH):
         # 统计分类情况
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)
-        correct += (predicted == labels).squeeze().sum().numpy()
+        correct += squeeze(predicted == labels).sum().numpy()
 
         # 打印训练信息
         loss_mean += loss.item()
@@ -220,7 +218,7 @@ for epoch in range(MAX_EPOCH):
 
                 _, predicted = torch.max(outputs.data, 1)
                 total_val += labels.size(0)
-                correct_val += (predicted == labels).squeeze().sum().numpy()
+                correct_val += squeeze(predicted == labels).sum().numpy()
 
                 loss_val += loss.item()
 
@@ -245,7 +243,7 @@ train_y = train_curve
 
 train_iters = len(train_loader)
 valid_x = (
-    np.arange(1, len(valid_curve) + 1) * train_iters * val_interval
+        np.arange(1, len(valid_curve) + 1) * train_iters * val_interval
 )  # 由于valid中记录的是epochloss，需要对记录点进行转换到iterations
 valid_y = valid_curve
 

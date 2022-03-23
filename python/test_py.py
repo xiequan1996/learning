@@ -1,17 +1,9 @@
-'''
-Descripttion: 
-version: 
-Author: xiequan
-Date: 2021-04-24 11:35:32
-LastEditors: Please set LastEditors
-LastEditTime: 2021-10-28 13:35:36
-'''
 import sys
-import os
-import time
+# import os
+# import time
 
 # from selenium import webdriver
-from tqdm import tqdm
+# from tqdm import tqdm
 
 print(sys.path)
 # driver=webdriver.Edge('C:\Program Files (x86)\Microsoft\Edge\Application\msedgedriver.exe')

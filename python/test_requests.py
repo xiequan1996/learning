@@ -1,16 +1,7 @@
-'''
-Descripttion: 学习requsets模块
-version: 
-Author: xiequan
-Date: 2021-05-23 17:28:19
-LastEditors: Please set LastEditors
-LastEditTime: 2021-07-18 16:06:09
-'''
-from posix import listdir
 import requests  # 导入requests库
 import os
 import time
-from bs4 import BeautifulSoup, element  # 导入BeautifulSoup模块
+from bs4 import BeautifulSoup  # 导入BeautifulSoup模块
 from tqdm import tqdm  # 导入进度条模块
 from selenium import webdriver  # 导入Selenium
 
@@ -30,7 +21,8 @@ def get_response(html_url, encoding='utf-8'):
         'Connection': 'keep-alive',
         'Cache-Control': 'max-age=0',
         'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/81.0.4044.138 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'Accept-Encoding': 'gzip,deflate',
         'Accept-Language': 'zh-CN,zh;q=0.9'
@@ -40,8 +32,9 @@ def get_response(html_url, encoding='utf-8'):
     return response
 
 
-class BeautifulNovel():     # 爬笔趣看小说网站的小说
-    def save(self, title, content):
+class BeautifulNovel:     # 爬笔趣看小说网站的小说
+    @staticmethod
+    def save(title, content):
         # file_name = f"{novel_name}.txt"  # 一定要记得加后缀.txt
         # file_name=f"2.txt"
         # mode 保存方式 a是追加保存 encoding是保存编码
@@ -83,8 +76,7 @@ class BeautifulNovel():     # 爬笔趣看小说网站的小说
         print('爬取小说成功')
 
 
-class BeautifulPicture():    # 爬煎蛋网的图片
-
+class BeautifulPicture:    # 爬煎蛋网的图片
     def __init__(self):  # 类的初始化操作
         self.web_url = 'https://jandan.net/girl'  # 要访问的网页地址
         self.folder_path = 'spider/picture'  # 设置图片要存放的文件目录
@@ -128,7 +120,8 @@ class BeautifulPicture():    # 爬煎蛋网的图片
         driver.close()
         print('爬取成功')
 
-    def save_img(self, url, file_name):  # 保存图片
+    @staticmethod
+    def save_img(url, file_name):  # 保存图片
         img = get_response(url)
         f = open(file_name, 'ab')
         f.write(img.content)

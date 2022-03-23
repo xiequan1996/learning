@@ -1,11 +1,3 @@
-'''
-Descripttion: 实现mnist手写识别
-version: 
-Author: xiequan
-Date: 2021-08-27 21:29:50
-LastEditors: Please set LastEditors
-LastEditTime: 2021-10-16 13:38:08
-'''
 import torch
 import torchvision
 from torch.utils.data import DataLoader
@@ -151,8 +143,8 @@ def test():
 
 
 test()
-for epoch in range(1, n_epochs + 1):
-    train(epoch)
+for i in range(1, n_epochs + 1):
+    train(i)
     test()
 
 fig = plt.figure()
@@ -162,4 +154,3 @@ plt.legend(['Train Loss', 'Test Loss'], loc='upper right')
 plt.xlabel('number of training examples seen')
 plt.ylabel('negative log likelihood loss')
 plt.show()
-

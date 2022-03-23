@@ -1,11 +1,6 @@
-'''
+"""
 Descripttion: 逻辑回归
-version: 
-Author: xiequan
-Date: 2021-08-22 17:02:25
-LastEditors: Please set LastEditors
-LastEditTime: 2021-08-22 17:09:23
-'''
+"""
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
@@ -28,6 +23,7 @@ x1 = torch.normal(-mean_value * n_data, 1) + bias  # 类别1 数据 shape=(100, 
 y1 = torch.ones(sample_nums)  # 类别1 标签 shape=(100, 1)
 train_x = torch.cat((x0, x1), 0)
 train_y = torch.cat((y0, y1), 0)
+
 
 # ============================ step 2/5 选择模型 ============================
 class LR(nn.Module):

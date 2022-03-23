@@ -1,12 +1,3 @@
-'''
-Descripttion: pytorch神经网络
-version: 
-Author: xiequan
-Date: 2021-08-14 23:50:55
-LastEditors: Please set LastEditors
-LastEditTime: 2021-08-14 23:52:46
-'''
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -34,7 +25,8 @@ class Net(nn.Module):
         x = self.fc3(x)
         return x
 
-    def num_flat_features(self, x):
+    @staticmethod
+    def num_flat_features(x):
         size = x.size()[1:]  # all dimensions except the batch dimension
         num_features = 1
         for s in size:
