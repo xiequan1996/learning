@@ -46,6 +46,8 @@ for i in range(epoch):
     for data in train_dataloader:
         imgs, targets = data
         outputs = module0(imgs)
+        print(outputs.shape)
+        print(targets.shape)
         loss = loss_fn(outputs, targets)
 
         # 优化器优化模型
@@ -71,9 +73,9 @@ for i in range(epoch):
             total_accuracy += accuracy
 
     print("整体测试集上的Loss:{}".format(total_test_loss))
-    print("整体测试集上的正确率：{}".format(total_accuracy/test_data_size))
+    print("整体测试集上的正确率：{}".format(total_accuracy / test_data_size))
     writer.add_scalar("test_loss", total_test_loss, total_test_step)
-    writer.add_scalar("test_accuracy",total_accuracy/test_data_size,total_test_step)
+    writer.add_scalar("test_accuracy", total_accuracy / test_data_size, total_test_step)
     total_test_step += 1
 
     # torch.save(module0, "model_{}.pth".format(i))

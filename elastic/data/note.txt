@@ -1,0 +1,13 @@
+modulus 30-90Gpa
+Shear modulus 10-50Gpa
+
+init _valus
+E11  75
+E22  70
+E33  10
+v12  0.012
+v13  0.777
+v23  0.45
+G13  7.5
+G12  40
+G23  7
