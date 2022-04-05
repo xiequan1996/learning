@@ -7,8 +7,8 @@ from tensorboardX import SummaryWriter
 
 from file_deal import *
 
-init_label = {"e11": 75, "e22": 70, "e33": 10, "g12": 7.5, "g13": 40, "g23": 7}
-train_path = "data/train1"
+init_label = {"e11": 75, "e22": 70, "e33": 10, "g12": 7.5, "g13": 40, "g23": 7, "v12": 0.012, "v13": 0.777, "v23": 0.45}
+train_path = "data/train"
 val_path = "data/val"
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -18,16 +18,10 @@ class MLNet(nn.Module):
     def __init__(self):
         super(MLNet, self).__init__()
         self.model = nn.Sequential(
-            nn.Conv2d(1, 8, 2, 2),
+            nn.Linear(9, 36),
             nn.ReLU(),
-            nn.Conv2d(8, 64, 2, 2),
-            nn.ReLU(),
-            nn.Flatten(),
-            nn.Linear(64 * 75 * 4, 1200),
-            nn.ReLU(),
-            nn.Linear(1200, 60),
-            nn.ReLU(),
-            nn.Linear(60, 6)
+            nn.Linear(36, 4),
+            nn.Softplus()
         )
 
     def forward(self, x):
@@ -35,8 +29,8 @@ class MLNet(nn.Module):
         return x
 
 
-# mlnet = MLNet()
-mlnet = torch.load("mlnet.pth")
+mlnet = MLNet()
+#mlnet = torch.load("mlnet.pth")
 mlnet.to(device)
 loss_fn = nn.MSELoss()
 loss_fn.to(device)

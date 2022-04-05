@@ -1,0 +1,79 @@
+import copy
+import os
+
+import numpy as np
+
+path = "./data/train"
+freq = 0.3
+init_label = {"e11": 75, "e22": 70, "e33": 10, "g12": 7.5, "g13": 40, "g23": 7, "v12": 0.012, "v13": 0.777, "v23": 0.45,
+              "freq": freq}
+
+
+def file_freq(folder1, index, freq1, label):
+    list_file1 = os.listdir(folder1)
+    file_gr = list_file1[index]
+    file_ph = list_file1[index + 1]
+    name = file_gr.split("-")
+    label[name[0]] = int(name[1])
+    list_gr = file2v(folder1, file_gr, freq1)
+    list_ph = file2v(folder1, file_ph, freq1)
+    label["s0_gr"] = list_gr[0]
+    label["a0_gr"] = list_gr[1]
+    label["s0_ph"] = list_ph[0]
+    label["a0_ph"] = list_ph[1]
+    return label
+
+
+def file2v(folder2, file, freq2):
+    f = open(folder2 + "/" + file, 'r')
+    lines = f.readlines()
+    line0 = lines[0]
+    line0_list = line0.strip().split('\t')
+    try:
+        s0_index = line0_list.index('Sym0')
+        a0_index = line0_list.index('Asym0')
+    except ValueError:
+        print(folder2 + "/" + file)
+        return [0, 0]
+    line_index = 3
+    line_index_s0 = 3
+    line_index_a0 = 3
+    freq_less_s0 = True
+    freq_less_a0 = True
+    while freq_less_s0 or freq_less_a0:
+        line_list = lines[line_index].split('\t')
+        if freq_less_s0 & (float(line_list[s0_index]) > freq2):
+            freq_less_s0 = False
+            line_index_s0 = line_index
+        if freq_less_a0 & (float(line_list[a0_index]) > freq2):
+            freq_less_a0 = False
+            line_index_a0 = line_index
+        line_index += 1
+    v_s0 = inter(lines, line_index_s0, s0_index, freq2)
+    v_a0 = inter(lines, line_index_a0, a0_index, freq2)
+    return [v_s0, v_a0]
+
+
+def inter(list_lines, row, column, x):
+    list1 = list_lines[row - 1].split('\t')
+    list2 = list_lines[row].split('\t')
+    return np.interp(x, [float(list1[column]), float(list2[column])],
+                     [float(list1[column + 1]), float(list2[column + 1])])
+
+
+fstream = open("{}M.txt".format(freq), 'a')
+list_folder = os.listdir(path)
+for folder in list_folder:
+    folder_label = copy.deepcopy(init_label)
+    foldername_list = folder.split('-')
+    folder_label[foldername_list[0]] = int(foldername_list[1])
+    folder_label[foldername_list[2]] = int(foldername_list[3])
+    list_file = os.listdir(path + "/" + folder)
+    num_file = int(len(list_file) / 2)
+    for i in range(num_file):
+        label_res = file_freq(path + "/" + folder, 2 * i, freq, folder_label)
+        for value in label_res.values():
+            fstream.write(str(value))
+            fstream.write('\t')
+        fstream.write('\n')
+fstream.close()
