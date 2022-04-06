@@ -3,8 +3,8 @@ import os
 
 import numpy as np
 
-path = "./data/train"
-freq = 0.3
+path = "./data/train1"
+freq = 0.5
 init_label = {"e11": 75, "e22": 70, "e33": 10, "g12": 7.5, "g13": 40, "g23": 7, "v12": 0.012, "v13": 0.777, "v23": 0.45,
               "freq": freq}
 
@@ -15,43 +15,58 @@ def file_freq(folder1, index, freq1, label):
     file_ph = list_file1[index + 1]
     name = file_gr.split("-")
     label[name[0]] = int(name[1])
-    list_gr = file2v(folder1, file_gr, freq1)
-    list_ph = file2v(folder1, file_ph, freq1)
+    list_gr, correct_gr = file2v(folder1, file_gr, freq1)
+    list_ph, correct_ph = file2v(folder1, file_ph, freq1)
     label["s0_gr"] = list_gr[0]
     label["a0_gr"] = list_gr[1]
     label["s0_ph"] = list_ph[0]
     label["a0_ph"] = list_ph[1]
-    return label
+    return label, correct_gr & correct_ph
 
 
 def file2v(folder2, file, freq2):
     f = open(folder2 + "/" + file, 'r')
     lines = f.readlines()
-    line0 = lines[0]
-    line0_list = line0.strip().split('\t')
+    line0_list = lines[0].strip().split('\t')
     try:
         s0_index = line0_list.index('Sym0')
         a0_index = line0_list.index('Asym0')
     except ValueError:
-        print(folder2 + "/" + file)
-        return [0, 0]
+        print(folder2 + "/" + file + "    Not found S0/A0")
+        return [0, 0], False
     line_index = 3
-    line_index_s0 = 3
-    line_index_a0 = 3
     freq_less_s0 = True
     freq_less_a0 = True
+    line1_list = lines[1].strip().split('\t')
+    s0_num_list = line1_list[s0_index].split()
+    a0_num_list = line1_list[a0_index].split()
+    line_index_s0 = 3
+    line_index_a0 = 3
+    s0_num = int(s0_num_list[0])+2
+    a0_num = int(a0_num_list[0])+2
     while freq_less_s0 or freq_less_a0:
         line_list = lines[line_index].split('\t')
-        if freq_less_s0 & (float(line_list[s0_index]) > freq2):
-            freq_less_s0 = False
-            line_index_s0 = line_index
-        if freq_less_a0 & (float(line_list[a0_index]) > freq2):
-            freq_less_a0 = False
-            line_index_a0 = line_index
+        if line_index_s0 <= s0_num:
+            if freq_less_s0 and (float(line_list[s0_index]) >= freq2):
+                freq_less_s0 = False
+                line_index_s0 = line_index
+        else:
+            print(folder2 + "/" + file + "    S0 less than {}M".format(freq))
+            return [0, 0], False
+        if line_index_a0 <= a0_num:
+            if freq_less_a0 and (float(line_list[a0_index]) >= freq2):
+                freq_less_a0 = False
+                line_index_a0 = line_index
+        else:
+            print(folder2 + "/" + file + "    A0 less than {}M".format(freq))
+            return [0, 0], False
         line_index += 1
+    if (line_index_s0 == 3) or (line_index_a0 == 3):
+        print(folder2 + "/" + file + "    more than {}M".format(freq))
+        return [0, 0], False
     v_s0 = inter(lines, line_index_s0, s0_index, freq2)
     v_a0 = inter(lines, line_index_a0, a0_index, freq2)
-    return [v_s0, v_a0]
+    return [v_s0, v_a0], True
 
 
 def inter(list_lines, row, column, x):
@@ -71,9 +86,10 @@ for folder in list_folder:
     list_file = os.listdir(path + "/" + folder)
     num_file = int(len(list_file) / 2)
     for i in range(num_file):
-        label_res = file_freq(path + "/" + folder, 2 * i, freq, folder_label)
-        for value in label_res.values():
-            fstream.write(str(value))
-            fstream.write('\t')
-        fstream.write('\n')
+        label_res, correct = file_freq(path + "/" + folder, 2 * i, freq, folder_label)
+        if correct:
+            for value in label_res.values():
+                fstream.write(str(value))
+                fstream.write('\t')
+            fstream.write('\n')
 fstream.close()
