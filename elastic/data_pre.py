@@ -79,30 +79,30 @@ def inter(list_lines, row, column, x):
                      [float(list1[column + 1]), float(list2[column + 1])])
 
 
-# fstream = open("{}M.txt".format(freq), 'a')
-# list_folder = os.listdir(path)
-# for folder in list_folder:
-#     folder_label = copy.deepcopy(init_label)
-#     foldername_list = folder.split('-')
-#     folder_label[foldername_list[0]] = int(foldername_list[1])
-#     folder_label[foldername_list[2]] = int(foldername_list[3])
-#     list_file = os.listdir(path + "/" + folder)
-#     num_file = int(len(list_file) / 2)
-#     for i in range(num_file):
-#         label_res, correct = file_freq(path + "/" + folder, 2 * i, freq, folder_label)
-#         if correct:
-#             for value in label_res.values():
-#                 fstream.write(str(value))
-#                 fstream.write('\t')
-#             fstream.write('\n')
-fstream = open("{}M_val.txt".format(freq), 'a')
-list_file = os.listdir(path)
-num_file = int(len(list_file) / 2)
-for i in range(num_file):
-    label_res, correct = file_freq(path, 2 * i, freq, init_label)
-    if correct:
-        for value in label_res.values():
-            fstream.write(str(value))
-            fstream.write('\t')
-        fstream.write('\n')
-fstream.close()
+fstream = open("{}M.txt".format(freq), 'a')
+list_folder = os.listdir(path)
+for folder in list_folder:
+    folder_label = copy.deepcopy(init_label)
+    foldername_list = folder.split('-')
+    folder_label[foldername_list[0]] = int(foldername_list[1])
+    folder_label[foldername_list[2]] = int(foldername_list[3])
+    list_file = os.listdir(path + "/" + folder)
+    num_file = int(len(list_file) / 2)
+    for i in range(num_file):
+        label_res, correct = file_freq(path + "/" + folder, 2 * i, freq, folder_label)
+        if correct:
+            for value in label_res.values():
+                fstream.write(str(value))
+                fstream.write('\t')
+            fstream.write('\n')
+# fstream = open("{}M_val.txt".format(freq), 'a')
+# list_file = os.listdir(path)
+# num_file = int(len(list_file) / 2)
+# for i in range(num_file):
+#     label_res, correct = file_freq(path, 2 * i, freq, init_label)
+#     if correct:
+#         for value in label_res.values():
+#             fstream.write(str(value))
+#             fstream.write('\t')
+#         fstream.write('\n')
+# fstream.close()

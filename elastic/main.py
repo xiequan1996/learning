@@ -31,7 +31,6 @@ class MLNet(nn.Module):
 
 
 mlnet = MLNet()
-# mlnet = torch.load("mlnet.pth")
 mlnet.to(device)
 loss_fn = nn.MSELoss()
 loss_fn.to(device)
